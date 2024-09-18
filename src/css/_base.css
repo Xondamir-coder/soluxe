@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sen:wght@400..800&display=swap');
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-o-font-smoothing: antialiased;
+}
+:root {
+	--font-sen: 'Sen', sans-serif;
+	--font-inter: 'Inter', sans-serif;
+
+	--black: #232536;
+	--yellow: #d4bb8a;
+	--green: #013d45;
+	--dark-grey: #4c4c4c;
+	--medium-grey: #6d6e76;
+	--light-grey: #f4f4f4;
+	--lavender: #f4f0f8;
+	--light-yellow: #fbf6ea;
+}
+
+html {
+	/* default root font-size is 16px */
+	/* so minimum font-size: .5rem * 16px = 8px */
+	/* maximum font-size: 1.5rem * 16px = 24px  */
+	/* preferred font-size: 1% of viewport width + 0.3rem(that is 4.8px) */
+
+	/* default font sizes */
+	/* h1: 2em (or 32px) */
+	/* h2: 1.5em (or 24px) */
+	/* h3: 1.17em (or 18.72px) */
+	/* h4: 1em (or 16px) */
+	/* h5: 0.83em (or 13.28px) */
+	/* h6: 0.67em (or 10.72px) */
+	font-size: clamp(0.5rem, 1vw + 0.3rem, 1.5rem);
+}
+body {
+	font-family: var(--font-sen);
+}
+p {
+	font-size: max(14px, 1em);
+}
+/* h1 { */
+/* no need for it but left it for easier understanding */
+/* no need because min font-size on html is 12px * 2em = 24px */
+/* font-size: max(24px, 2em); */
+/* }
+/* h2 {
+	font-size: max(20px, 1.5em);
+}
+h3 {
+	font-size: max(18px, 1.17em);
+}
+h4 {
+	font-size: max(16px, 1em);
+}
+h5 {
+	font-size: max(14px, 0.83em);
+}
+h6 {
+	font-size: max(12px, 0.67em);
+} */
+a {
+	text-decoration: none;
+	color: inherit;
+}
+button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	color: inherit;
+	font: inherit;
+}
+
+html.lenis,
+html.lenis body {
+	height: auto;
+}
+
+.lenis.lenis-smooth {
+	scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+	overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+	overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+	pointer-events: none;
+}
