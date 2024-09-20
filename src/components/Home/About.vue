@@ -10,6 +10,7 @@
 			</p>
 		</div>
 		<div class="about__bg">
+			<img src="@/images/about-bg.jpg" alt="bg banner" />
 			<ul class="about__stats">
 				<li class="about__stats-item" v-for="{ amount, title } in stats" :key="title">
 					<h1 class="h1-big">{{ amount }}</h1>
@@ -65,25 +66,35 @@
 	&__stats {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-		gap: 2.5rem;
 		background-color: var(--yellow);
 		color: #fff;
-		position: absolute;
-		bottom: 0;
 		width: 100%;
 		max-width: 33rem;
-		left: 10%;
 		padding: 1.6rem 2.4rem;
+		align-self: end;
+		margin-left: 10%;
+		@media screen and (max-width: 768px) {
+			margin-left: 0;
+			max-width: 100%;
+			gap: 10px;
+		}
 		h1 {
 			text-transform: uppercase;
 		}
 	}
 	&__bg {
-		position: relative;
-		background-image: url(@/images/about-bg.jpg);
-		aspect-ratio: 320/111;
-		background-size: cover;
-		background-repeat: no-repeat;
+		display: grid;
+		& > * {
+			grid-area: 1/1/2/2;
+			@media screen and (max-width: 768px) {
+				grid-area: auto;
+			}
+		}
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
 	}
 	&__header {
 		transform: translateY(3.5rem);
@@ -97,7 +108,10 @@
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 
 		@media only screen and (max-width: 800px) {
-			max-width: 95%;
+			max-width: 100%;
+			transform: translateY(0);
+			margin: 10rem 20px;
+			gap: 30px;
 		}
 
 		&-label {
@@ -114,9 +128,6 @@
 			display: flex;
 			flex-direction: column;
 			gap: 1.5rem;
-			@media only screen and (max-width: 800px) {
-				order: 1;
-			}
 		}
 	}
 }

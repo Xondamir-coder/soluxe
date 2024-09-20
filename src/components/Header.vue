@@ -57,12 +57,16 @@ const toggleLang = () => {
 	transform: translateX(100%);
 	transition: transform 0.6s;
 	&__links > * {
-		font-size: clamp(50px, 2.5vw + 1rem, 70px);
+		font-size: clamp(40px + 1vh, 2.5vw + 1rem, 70px);
 		font-weight: 700;
 		letter-spacing: -2px;
 		flex-direction: column;
 		align-items: center;
+		font-family: var(--font-sen);
 		gap: 0;
+		a {
+			font-family: var(--font-sen);
+		}
 	}
 }
 .links {

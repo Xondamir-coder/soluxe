@@ -23,7 +23,7 @@
 				<p class="body-1">{{ $t('address') }}</p>
 				<a href="mailto:Soluxeevents@gmail.com " class="body-1">Soluxeevents@gmail.com </a>
 			</div>
-			<Socials class="fill-grey" />
+			<Socials class="footer__socials fill-grey" />
 		</div>
 	</footer>
 </template>
@@ -33,13 +33,40 @@ import { ref } from 'vue';
 import Logo from './Icons/Logo.vue';
 import LinkList from './LinkList.vue';
 import Socials from './Socials.vue';
+import env from '@/env';
 
 const isLoading = ref(false);
 const isSent = ref(false);
 const email = ref('');
 
-const submitEmail = () => {
-	console.log('asd');
+const submitEmail = async () => {
+	email.value = email.value.trim();
+
+	if (!email.value) return;
+
+	isLoading.value = true;
+
+	const text = `
+Type: Subscription
+Email: ${email.value}
+Time: ${Intl.DateTimeFormat('en-GB', {
+		dateStyle: 'short',
+		timeStyle: 'short'
+	}).format(new Date())}
+	`;
+
+	const res = await fetch(`https://api.telegram.org/bot${env.botToken}/sendMessage`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ chat_id: env.chat_id, text })
+	});
+	await res.json();
+
+	isSent.value = true;
+	isLoading.value = false;
+	email.value = '';
 };
 </script>
 
@@ -56,6 +83,12 @@ const submitEmail = () => {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+	&__socials {
+		@media only screen and (max-width: 500px) {
+			width: 41px;
+			height: 41px;
+		}
+	}
 	&__logo {
 		@media only screen and (max-width: 500px) {
 			width: 40%;
@@ -122,6 +155,10 @@ const submitEmail = () => {
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
+		@media only screen and (max-width: 500px) {
+			flex-direction: column;
+			gap: 15px;
+		}
 		.body-1 {
 			color: rgba(255, 255, 255, 0.7);
 			font-family: var(--font-inter);

@@ -152,14 +152,14 @@
 </style>
 
 <script setup>
+import env from '@/env';
 import { ref } from 'vue';
 
 const name = ref('');
 const email = ref('');
 const isLoading = ref(false);
 const isSent = ref(false);
-const botToken = '7680567110:AAFrA3mueD6MIApZ_JNwqV9BWLziGwawBU0';
-const chat_id = '@soluxe_events';
+
 const submitMessage = async () => {
 	name.value = name.value.trim();
 	email.value = email.value.trim();
@@ -169,6 +169,7 @@ const submitMessage = async () => {
 	isLoading.value = true;
 
 	const text = `
+Type: Message	
 Name: ${name.value}
 Email: ${email.value}
 Time: ${Intl.DateTimeFormat('en-GB', {
@@ -177,12 +178,12 @@ Time: ${Intl.DateTimeFormat('en-GB', {
 	}).format(new Date())}
 	`;
 
-	const res = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+	const res = await fetch(`https://api.telegram.org/bot${env.botToken}/sendMessage`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ chat_id, text })
+		body: JSON.stringify({ chat_id: env.chat_id, text })
 	});
 	await res.json();
 

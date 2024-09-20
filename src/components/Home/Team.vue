@@ -25,8 +25,8 @@
 	&__img {
 		object-fit: contain;
 		margin-bottom: 1rem;
-		width: 70%;
-		height: 70%;
+		width: 60%;
+		height: 60%;
 		align-self: center;
 	}
 	&__list {
@@ -41,6 +41,9 @@
 		flex-direction: column;
 		padding: 2rem 1.4rem;
 		transition: background-color 0.3s;
+		@media only screen and (max-width: 768px) {
+			gap: 10px;
+		}
 		&:hover {
 			background-color: var(--light-yellow);
 		}

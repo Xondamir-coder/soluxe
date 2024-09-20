@@ -81,12 +81,12 @@ const services = computed(() => [
 		text: i18n.global.t('service-text-1')
 	},
 	{
-		icon: Trade,
+		icon: Shuttle,
 		title: i18n.global.t('service-title-2'),
 		text: i18n.global.t('service-text-2')
 	},
 	{
-		icon: Shuttle,
+		icon: Trade,
 		title: i18n.global.t('service-title-3'),
 		text: i18n.global.t('service-text-3')
 	},

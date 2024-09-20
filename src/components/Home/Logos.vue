@@ -13,19 +13,36 @@
 </template>
 
 <style lang="scss" scoped>
+@keyframes move-left {
+	from {
+		transform: translateX(100px);
+	}
+	to {
+		transform: translateX(-800px);
+	}
+}
 .logos {
 	display: flex;
 	align-items: center;
-	gap: 4.2rem;
+	column-gap: 4.2rem;
+	row-gap: 2.2rem;
 	margin: calc(172 / 2 * 0.1rem) 0;
-	@media only screen and (max-width: 500px) {
+	overflow: hidden;
+	@media only screen and (max-width: 768px) {
 		flex-direction: column;
 		align-items: start;
 	}
+
+	&__item {
+		@media only screen and (max-width: 1200px) {
+			animation: move-left 10s linear infinite alternate;
+		}
+	}
 	&__list {
+		overflow: hidden;
 		flex-grow: 1;
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+		grid-template-columns: repeat(5, 1fr);
 		gap: 3.5rem;
 	}
 	&__content {

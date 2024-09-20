@@ -16,9 +16,9 @@
 	list-style: none;
 	display: flex;
 	gap: 1.2rem;
+	font-family: var(--font-inter);
 }
 .link {
-	font-family: var(--font-inter);
 	color: #fff;
 	transition: color 0.4s, text-shadow 0.4s;
 	&:hover {

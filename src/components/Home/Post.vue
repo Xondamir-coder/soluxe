@@ -1,5 +1,5 @@
 <template>
-	<section class="post">
+	<section class="post" id="post">
 		<img class="post__img" src="@/images/work-1.jpg" alt="work 1" />
 		<div class="post__content">
 			<h4 class="cap-1">{{ $t('post-label') }}</h4>
@@ -11,6 +11,11 @@
 </template>
 
 <style lang="scss" scoped>
+#post {
+	@media only screen and (max-width: 768px) {
+		padding: 0;
+	}
+}
 .post {
 	display: grid;
 	grid-template-columns: repeat(20, 1fr);
@@ -39,6 +44,9 @@
 			grid-column: 1/-1;
 			grid-row: 2 / span 1;
 			padding: 35px 0;
+		}
+		@media only screen and (max-width: 768px) {
+			padding: 35px;
 		}
 	}
 }
