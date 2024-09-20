@@ -1,8 +1,11 @@
 <template>
 	<nav class="nav">
-		<ul class="list">
+		<ul class="list body-1">
 			<li class="item" v-for="{ name, to } in links" :key="name">
-				<RouterLink class="link body-1" :to="to">{{ name }}</RouterLink>
+				<a class="link" :href="to.replace('/', '#')">{{ name }}</a>
+			</li>
+			<li class="item" v-if="isFooter">
+				<RouterLink class="link" to="/policy">{{ $t('link-policy') }}</RouterLink>
 			</li>
 		</ul>
 	</nav>
@@ -39,12 +42,11 @@ const linkArr = [
 	{ name: 'link-team', to: '/team' },
 	{ name: 'link-services', to: '/services' },
 	{ name: 'link-work', to: '/work' },
-	{ name: 'link-contact', to: '/contact' },
-	{ name: 'link-policy', to: '/policy' }
+	{ name: 'link-contact', to: '/contact' }
 ];
 
 const links = computed(() =>
-	(props.isFooter ? linkArr : linkArr.slice(0, -1)).map(link => ({
+	linkArr.map(link => ({
 		...link,
 		name: i18n.global.t(link.name)
 	}))

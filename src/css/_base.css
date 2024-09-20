@@ -40,9 +40,13 @@ html {
 	/* h5: 0.83em (or 13.28px) */
 	/* h6: 0.67em (or 10.72px) */
 	font-size: clamp(0.5rem, 1vw + 0.3rem, 1.5rem);
+	scroll-behavior: smooth;
 }
 body {
 	font-family: var(--font-sen);
+}
+body:has(.header.menu-open) {
+	overflow: hidden;
 }
 p {
 	font-size: max(14px, 1em);
@@ -71,12 +75,19 @@ a {
 	text-decoration: none;
 	color: inherit;
 }
+ul {
+	list-style: none;
+}
 button {
 	background-color: transparent;
 	border: none;
 	cursor: pointer;
 	color: inherit;
 	font: inherit;
+}
+input {
+	font: inherit;
+	color: inherit;
 }
 
 html.lenis,
