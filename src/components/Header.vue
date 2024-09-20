@@ -120,6 +120,9 @@ const toggleLang = () => {
 		border-radius: 2px;
 		position: relative;
 		transition: background-color 0.3s;
+		@media only screen and (min-width: 1000px) {
+			display: none;
+		}
 		&.active {
 			background-color: transparent;
 			&::before {
