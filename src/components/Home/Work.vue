@@ -8,8 +8,8 @@
 					class="work__item-img"
 					:src="work.img"
 					:alt="work.title"
-					width="667"
-					height="550" />
+					width="938"
+					height="770" />
 				<div class="work__item-content">
 					<h4 class="h4">{{ work.title }}</h4>
 					<p class="work__item-text">{{ work.company }}</p>

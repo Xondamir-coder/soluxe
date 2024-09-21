@@ -18,6 +18,13 @@
 				referrerpolicy="no-referrer-when-downgrade"></iframe>
 			<div class="contact__content">
 				<div class="contact__content-head">
+					<img
+						loading="lazy"
+						class="contact__img"
+						src="@/images/work-6.avif"
+						alt="ladies in background"
+						width="936"
+						height="770" />
 					<div class="contact__col">
 						<p class="body-2">{{ $t('contact-label-1') }}</p>
 						<h5 class="h5">
@@ -97,12 +104,15 @@
 		gap: 0.5rem;
 		z-index: 2;
 	}
+	&__img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		position: absolute;
+		inset: 0;
+	}
 	&__content {
 		&-head {
-			background-image: url(@/images/work-6.avif);
-			background-size: cover;
-			aspect-ratio: 2.5;
-			background-position: center;
 			color: #fff;
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -118,6 +128,7 @@
 				width: 100%;
 				height: 100%;
 				background: rgba(0, 0, 0, 0.5);
+				z-index: 1;
 			}
 			.body-2,
 			.body-1 {

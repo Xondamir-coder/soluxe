@@ -10,7 +10,13 @@
 			</p>
 		</div>
 		<div class="about__bg">
-			<img src="@/images/about-bg.avif" alt="bg banner" />
+			<img
+				loading="lazy"
+				class="about__bg-img"
+				src="@/images/about-bg.avif"
+				alt="bg banner"
+				width="1280"
+				height="444" />
 			<ul class="about__stats">
 				<li class="about__stats-item" v-for="{ amount, title } in stats" :key="title">
 					<h1 class="h1-big">{{ amount }}</h1>
@@ -90,9 +96,9 @@
 				grid-area: auto;
 			}
 		}
-		img {
+		&-img {
 			width: 100%;
-			height: 100%;
+			height: auto;
 			object-fit: cover;
 		}
 	}

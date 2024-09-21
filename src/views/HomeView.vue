@@ -15,6 +15,7 @@
 
 <script setup>
 import { onMounted } from 'vue';
+import Lenis from 'lenis';
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import About from '@/components/Home/About.vue';
@@ -25,6 +26,13 @@ import Post from '@/components/Home/Post.vue';
 import Services from '@/components/Home/Services.vue';
 import Team from '@/components/Home/Team.vue';
 import Work from '@/components/Home/Work.vue';
+
+const lenis = new Lenis();
+function raf(time) {
+	lenis.raf(time);
+	requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
 onMounted(() => {
 	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
