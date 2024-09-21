@@ -103,11 +103,13 @@ const toggleLang = () => {
 	// background-color: rgba(255, 255, 255, 0.05);
 	color: #fff;
 	padding: 12px 3rem;
-	display: flex;
+	display: grid;
+	grid-template-columns: max-content 1fr max-content 12.5rem;
 	align-items: center;
 	@media only screen and (max-width: 1000px) {
-		justify-content: space-between;
 		transition: background-color 0.4s, backdrop-filter 0.4s;
+		display: flex;
+		justify-content: space-between;
 	}
 	&.menu-open {
 		background-color: transparent;

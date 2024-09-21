@@ -1,5 +1,9 @@
 <template>
-	<section id="#" class="hero">
+	<section id="home" class="hero">
+		<video class="hero__video" loop muted autoplay>
+			<source src="@/videos/hero-video.mp4" type="video/mp4" />
+			Your browser does not support the video tag.
+		</video>
 		<div class="hero__content">
 			<h1 class="h1-big hero__title">
 				{{ $t('hero-title') }}
@@ -21,15 +25,19 @@
 
 <style lang="scss" scoped>
 .hero {
-	background-image: url('@/images/hero-bg.jpg');
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
 	min-height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: relative;
+	&__video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
 	&::before {
 		content: '';
 		position: absolute;
@@ -37,6 +45,7 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
+		z-index: 1;
 		background: radial-gradient(
 			30.56% 76.04% at 74.58% 0%,
 			rgba(0, 0, 0, 0) 0%,

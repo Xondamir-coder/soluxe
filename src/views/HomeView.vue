@@ -14,6 +14,7 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
 import About from '@/components/Home/About.vue';
@@ -24,6 +25,26 @@ import Post from '@/components/Home/Post.vue';
 import Services from '@/components/Home/Services.vue';
 import Team from '@/components/Home/Team.vue';
 import Work from '@/components/Home/Work.vue';
+
+onMounted(() => {
+	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+		anchor.addEventListener('click', function (e) {
+			e.preventDefault();
+
+			const targetId = this.getAttribute('href');
+			const targetElement = document.querySelector(targetId);
+
+			const headerOffset = 100; // Adjust this to your header height
+			const elementPosition = targetElement.getBoundingClientRect().top;
+			const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+			window.scrollTo({
+				top: offsetPosition,
+				behavior: 'smooth'
+			});
+		});
+	});
+});
 </script>
 
 <style lang="scss" scoped>

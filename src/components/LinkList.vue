@@ -37,7 +37,7 @@ const props = defineProps({
 });
 
 const linkArr = [
-	{ name: 'link-home', to: '/' },
+	{ name: 'link-home', to: '/home' },
 	{ name: 'link-about', to: '/about' },
 	{ name: 'link-team', to: '/team' },
 	{ name: 'link-services', to: '/services' },

@@ -73,10 +73,10 @@
 		padding: 1.6rem 2.4rem;
 		align-self: end;
 		margin-left: 10%;
+		gap: 10px;
 		@media screen and (max-width: 768px) {
 			margin-left: 0;
 			max-width: 100%;
-			gap: 10px;
 		}
 		h1 {
 			text-transform: uppercase;

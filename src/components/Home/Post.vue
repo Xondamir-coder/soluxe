@@ -32,6 +32,7 @@
 	}
 	&__content {
 		padding: 4rem;
+		padding-right: 1rem;
 		background-color: #fff;
 		align-self: end;
 		grid-row: 1/2;
