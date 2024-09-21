@@ -3,7 +3,7 @@
 		<h2 class="team__title h2">{{ $t('team-title') }}</h2>
 		<ul class="team__list">
 			<li class="team__item" v-for="{ name, job, img } in employees" :key="name">
-				<img class="team__img" :src="img" :alt="name" />
+				<img loading="lazy" class="team__img" :src="img" :alt="name" />
 				<h3 class="h3">{{ name }}</h3>
 				<p class="body-2">{{ job }}</p>
 				<Socials class="fill-black" />
@@ -58,10 +58,10 @@
 import { i18n } from '@/locales';
 import { computed } from 'vue';
 
-import person1Img from '@/images/person-1.png';
-import person2Img from '@/images/person-2.png';
-import person3Img from '@/images/person-3.png';
-import person4Img from '@/images/person-4.png';
+import person1Img from '@/images/person-1.webp';
+import person2Img from '@/images/person-2.webp';
+import person3Img from '@/images/person-3.webp';
+import person4Img from '@/images/person-4.webp';
 import Socials from '../Socials.vue';
 
 const employees = computed(() => [

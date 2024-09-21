@@ -1,7 +1,7 @@
 <template>
 	<ul class="socials">
-		<li class="social" v-for="icon in icons" :key="icon">
-			<a href="#" target="_blank">
+		<li class="social" v-for="{ icon, name } in icons" :key="icon">
+			<a href="#" target="_blank" :aria-label="name">
 				<component :is="icon" class="socials__icon" />
 			</a>
 		</li>
@@ -14,7 +14,12 @@ import Twitter from './Icons/Twitter.vue';
 import Instagram from './Icons/Instagram.vue';
 import Linkedin from './Icons/Linkedin.vue';
 
-const icons = [Facebook, Twitter, Instagram, Linkedin];
+const icons = [
+	{ name: 'Facebook', icon: Facebook },
+	{ name: 'Twitter', icon: Twitter },
+	{ name: 'Instagram', icon: Instagram },
+	{ name: 'Linkedin', icon: Linkedin }
+];
 </script>
 
 <style scoped lang="scss">

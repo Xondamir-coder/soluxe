@@ -10,7 +10,7 @@
 			</p>
 		</div>
 		<div class="about__bg">
-			<img src="@/images/about-bg.jpg" alt="bg banner" />
+			<img src="@/images/about-bg.avif" alt="bg banner" />
 			<ul class="about__stats">
 				<li class="about__stats-item" v-for="{ amount, title } in stats" :key="title">
 					<h1 class="h1-big">{{ amount }}</h1>

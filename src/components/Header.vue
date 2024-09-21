@@ -1,11 +1,15 @@
 <template>
 	<header class="header" :class="{ 'menu-open': isMenuOpen }">
-		<button>
+		<button :aria-label="$t('reload-page')" @click="reloadPage">
 			<Logo />
 		</button>
-		<button class="header__menu" @click="toggleMenu" :class="{ active: isMenuOpen }"></button>
+		<button
+			class="header__menu"
+			@click="toggleMenu"
+			:class="{ active: isMenuOpen }"
+			:aria-label="$t('open-menu')"></button>
 		<LinkList class="links" />
-		<button class="lang" @click="toggleLang">
+		<button class="lang" @click="toggleLang" :aria-label="$t('change-lang')">
 			<p>
 				{{ $i18n.locale }} /
 				{{ $i18n.availableLocales.find(locale => locale !== $i18n.locale).toUpperCase() }}
@@ -33,7 +37,13 @@ const toggleMenu = () => {
 	console.log('hello');
 	isMenuOpen.value = !isMenuOpen.value;
 };
-
+const reloadPage = () => {
+	window.scrollTo({
+		top: 0,
+		behavior: 'instant'
+	});
+	window.location.reload();
+};
 const toggleLang = () => {
 	changeLang(i18n.global.locale == 'en' ? 'ru' : 'en');
 };

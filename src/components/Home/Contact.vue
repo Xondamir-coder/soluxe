@@ -7,6 +7,7 @@
 		</div>
 		<div class="contact__main">
 			<iframe
+				:title="$t('address-map')"
 				class="contact__map"
 				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11989.705769446253!2d69.26809392501588!3d41.29958574046737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8ad956f1add7%3A0xdf0b6f3d14194455!2s6!5e0!3m2!1sen!2s!4v1726764454518!5m2!1sen!2s"
 				width="100%"
@@ -98,7 +99,7 @@
 	}
 	&__content {
 		&-head {
-			background-image: url(@/images/work-6.jpg);
+			background-image: url(@/images/work-6.avif);
 			background-size: cover;
 			aspect-ratio: 2.5;
 			background-position: center;

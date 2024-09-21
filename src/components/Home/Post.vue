@@ -1,6 +1,12 @@
 <template>
 	<section class="post" id="post">
-		<img class="post__img" src="@/images/work-1.jpg" alt="work 1" />
+		<img
+			loading="lazy"
+			class="post__img"
+			src="@/images/work-1.avif"
+			alt="work 1"
+			width="667"
+			height="550" />
 		<div class="post__content">
 			<h4 class="cap-1">{{ $t('post-label') }}</h4>
 			<h1 class="h1">{{ $t('post-title') }}</h1>
@@ -21,7 +27,7 @@
 	grid-template-columns: repeat(20, 1fr);
 	&__img {
 		width: 100%;
-		height: 100%;
+		height: auto;
 		object-fit: cover;
 		grid-column: 1 / span 15;
 		grid-row: 1/2;

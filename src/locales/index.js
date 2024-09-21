@@ -13,7 +13,10 @@ export const i18n = createI18n({
 	}
 });
 
+document.documentElement.lang = i18n.global.locale;
+
 export const changeLang = newLang => {
 	localStorage.setItem('lang', newLang);
 	i18n.global.locale = newLang;
+	document.documentElement.lang = newLang;
 };

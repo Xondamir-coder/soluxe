@@ -3,7 +3,13 @@
 		<h2 class="work__title h2">{{ $t('work-title') }}</h2>
 		<ul class="work__list">
 			<li class="work__item" v-for="work in works" :key="work.title">
-				<img class="work__item-img" :src="work.img" :alt="work.title" />
+				<img
+					loading="lazy"
+					class="work__item-img"
+					:src="work.img"
+					:alt="work.title"
+					width="667"
+					height="550" />
 				<div class="work__item-content">
 					<h4 class="h4">{{ work.title }}</h4>
 					<p class="work__item-text">{{ work.company }}</p>
@@ -78,6 +84,7 @@
 		&-img {
 			grid-area: 1/1/2/2;
 			width: 100%;
+			height: auto;
 			object-fit: cover;
 		}
 		&-content {
@@ -112,12 +119,12 @@
 <script setup>
 import { i18n } from '@/locales';
 import { computed } from 'vue';
-import workImg1 from '@/images/work-1.jpg';
-import workImg2 from '@/images/work-2.jpg';
-import workImg3 from '@/images/work-3.jpg';
-import workImg4 from '@/images/work-4.jpg';
-import workImg5 from '@/images/work-5.jpg';
-import workImg6 from '@/images/work-6.jpg';
+import workImg1 from '@/images/work-1.avif';
+import workImg2 from '@/images/work-2.avif';
+import workImg3 from '@/images/work-3.avif';
+import workImg4 from '@/images/work-4.avif';
+import workImg5 from '@/images/work-5.avif';
+import workImg6 from '@/images/work-6.avif';
 
 const works = computed(() => [
 	{
