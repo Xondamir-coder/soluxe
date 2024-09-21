@@ -31,6 +31,109 @@
 	</section>
 </template>
 
+<script setup>
+import { i18n } from '@/locales';
+import { computed, nextTick, onMounted, watch } from 'vue';
+import workImg1 from '@/images/work-1.avif';
+import workImg2 from '@/images/work-2.avif';
+import workImg3 from '@/images/work-3.avif';
+import workImg4 from '@/images/work-4.avif';
+import workImg5 from '@/images/work-5.avif';
+import workImg6 from '@/images/work-6.avif';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
+const anims = [];
+const animateCards = () => {
+	if (anims.length) {
+		anims.forEach(anim => {
+			if (anim.scrollTrigger) {
+				anim.scrollTrigger.kill(); // Kill the ScrollTrigger
+			}
+			anim.kill(); // Kill the GSAP animation
+		});
+		anims.length = 0;
+	}
+	document.querySelectorAll('.work__item-content').forEach(el => {
+		const anim = gsap
+			.timeline({
+				scrollTrigger: {
+					trigger: el,
+					start: 'top-=300 center',
+					end: 'bottom+=50 center',
+					scrub: 1
+				}
+			})
+			.from(el, {
+				height: 0,
+				opacity: 0
+			})
+			.from(el.children, {
+				scale: 1.1,
+				opacity: 0
+			});
+		anims.push(anim);
+	});
+};
+const animateElements = () => {
+	gsap.from('.work__title', {
+		opacity: 0,
+		filter: 'blur(10px)',
+		y: -30,
+		scrollTrigger: {
+			trigger: '.work__title',
+			start: 'top center',
+			end: 'bottom+=50 center',
+			scrub: 1
+		}
+	});
+	animateCards();
+};
+
+onMounted(animateElements);
+watch(
+	() => i18n.global.locale,
+	async () => {
+		await nextTick();
+		animateCards();
+	}
+);
+
+const works = computed(() => [
+	{
+		title: i18n.global.t('work-title-1'),
+		company: i18n.global.t('work-company-1'),
+		img: workImg1
+	},
+	{
+		title: i18n.global.t('work-title-2'),
+		company: i18n.global.t('work-company-2'),
+		img: workImg2
+	},
+	{
+		title: i18n.global.t('work-title-3'),
+		company: i18n.global.t('work-company-3'),
+		img: workImg3
+	},
+	{
+		title: i18n.global.t('work-title-4'),
+		company: i18n.global.t('work-company-4'),
+		img: workImg4
+	},
+	{
+		title: i18n.global.t('work-title-5'),
+		company: i18n.global.t('work-company-5'),
+		img: workImg5
+	},
+	{
+		title: i18n.global.t('work-title-6'),
+		company: i18n.global.t('work-company-6'),
+		img: workImg6
+	}
+]);
+</script>
+
 <style scoped lang="scss">
 .work {
 	display: flex;
@@ -88,6 +191,7 @@
 			object-fit: cover;
 		}
 		&-content {
+			overflow: hidden;
 			align-self: end;
 			justify-self: center;
 			margin-bottom: 1.6rem;
@@ -115,47 +219,3 @@
 	}
 }
 </style>
-
-<script setup>
-import { i18n } from '@/locales';
-import { computed } from 'vue';
-import workImg1 from '@/images/work-1.avif';
-import workImg2 from '@/images/work-2.avif';
-import workImg3 from '@/images/work-3.avif';
-import workImg4 from '@/images/work-4.avif';
-import workImg5 from '@/images/work-5.avif';
-import workImg6 from '@/images/work-6.avif';
-
-const works = computed(() => [
-	{
-		title: i18n.global.t('work-title-1'),
-		company: i18n.global.t('work-company-1'),
-		img: workImg1
-	},
-	{
-		title: i18n.global.t('work-title-2'),
-		company: i18n.global.t('work-company-2'),
-		img: workImg2
-	},
-	{
-		title: i18n.global.t('work-title-3'),
-		company: i18n.global.t('work-company-3'),
-		img: workImg3
-	},
-	{
-		title: i18n.global.t('work-title-4'),
-		company: i18n.global.t('work-company-4'),
-		img: workImg4
-	},
-	{
-		title: i18n.global.t('work-title-5'),
-		company: i18n.global.t('work-company-5'),
-		img: workImg5
-	},
-	{
-		title: i18n.global.t('work-title-6'),
-		company: i18n.global.t('work-company-6'),
-		img: workImg6
-	}
-]);
-</script>

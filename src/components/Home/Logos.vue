@@ -12,6 +12,16 @@
 	</section>
 </template>
 
+<script setup>
+import { onMounted } from 'vue';
+import Logo1 from '../Icons/Logo-1.vue';
+import Logo2 from '../Icons/Logo-2.vue';
+import Logo3 from '../Icons/Logo-3.vue';
+import Logo4 from '../Icons/Logo-4.vue';
+import Logo5 from '../Icons/Logo-5.vue';
+const logos = [Logo1, Logo2, Logo3, Logo4, Logo5];
+</script>
+
 <style lang="scss" scoped>
 @keyframes move-left {
 	from {
@@ -56,13 +66,3 @@
 	}
 }
 </style>
-
-<script setup>
-import Logo1 from '../Icons/Logo-1.vue';
-import Logo2 from '../Icons/Logo-2.vue';
-import Logo3 from '../Icons/Logo-3.vue';
-import Logo4 from '../Icons/Logo-4.vue';
-import Logo5 from '../Icons/Logo-5.vue';
-
-const logos = [Logo1, Logo2, Logo3, Logo4, Logo5];
-</script>

@@ -1,6 +1,7 @@
 import { createI18n } from 'vue-i18n';
 import en from './en.json';
 import ru from './ru.json';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const locale = localStorage.getItem('lang') || navigator.language.split('-')[0];
 

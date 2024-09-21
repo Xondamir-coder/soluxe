@@ -13,6 +13,102 @@
 	</section>
 </template>
 
+<script setup>
+import { computed, nextTick, onMounted, watch } from 'vue';
+import Corporate from '../Icons/Corporate.vue';
+import Cyborg from '../Icons/Cyborg.vue';
+import Shuttle from '../Icons/Shuttle.vue';
+import Trade from '../Icons/Trade.vue';
+import { i18n } from '@/locales';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
+const anims = [];
+const animateCards = () => {
+	if (anims.length) {
+		anims.forEach(anim => {
+			if (anim.scrollTrigger) {
+				anim.scrollTrigger.kill(); // Kill the ScrollTrigger
+			}
+			anim.kill(); // Kill the GSAP animation
+		});
+		anims.length = 0;
+	}
+	document.querySelectorAll('.services__item').forEach(el => {
+		const anim = gsap.from(el.children, {
+			x: 20,
+			y: -20,
+			opacity: 0,
+			stagger: 0.2,
+			scrollTrigger: {
+				trigger: el,
+				start: 'top-=300 center',
+				end: 'bottom+=50 center',
+				scrub: 1
+			}
+		});
+		anims.push(anim);
+	});
+};
+const animateElements = () => {
+	gsap.from('.services__title', {
+		opacity: 0,
+		filter: 'blur(10px)',
+		y: -30,
+		scrollTrigger: {
+			trigger: '.services__title',
+			start: 'top center',
+			end: 'bottom+=50 center',
+			scrub: 1
+		}
+	});
+	animateCards();
+};
+
+onMounted(animateElements);
+watch(
+	() => i18n.global.locale,
+	async () => {
+		await nextTick();
+		animateCards();
+	}
+);
+
+const services = computed(() => [
+	{
+		icon: Corporate,
+		title: i18n.global.t('service-title-1'),
+		text: i18n.global.t('service-text-1')
+	},
+	{
+		icon: Shuttle,
+		title: i18n.global.t('service-title-2'),
+		text: i18n.global.t('service-text-2')
+	},
+	{
+		icon: Trade,
+		title: i18n.global.t('service-title-3'),
+		text: i18n.global.t('service-text-3')
+	},
+	{
+		icon: Cyborg,
+		title: i18n.global.t('service-title-4'),
+		text: i18n.global.t('service-text-4')
+	},
+	{
+		icon: Cyborg,
+		title: i18n.global.t('service-title-5'),
+		text: i18n.global.t('service-text-5')
+	},
+	{
+		icon: Cyborg,
+		title: i18n.global.t('service-title-6'),
+		text: i18n.global.t('service-text-6')
+	}
+]);
+</script>
+
 <style scoped lang="scss">
 .services {
 	display: flex;
@@ -65,45 +161,3 @@
 	}
 }
 </style>
-
-<script setup>
-import { computed } from 'vue';
-import Corporate from '../Icons/Corporate.vue';
-import Cyborg from '../Icons/Cyborg.vue';
-import Shuttle from '../Icons/Shuttle.vue';
-import Trade from '../Icons/Trade.vue';
-import { i18n } from '@/locales';
-
-const services = computed(() => [
-	{
-		icon: Corporate,
-		title: i18n.global.t('service-title-1'),
-		text: i18n.global.t('service-text-1')
-	},
-	{
-		icon: Shuttle,
-		title: i18n.global.t('service-title-2'),
-		text: i18n.global.t('service-text-2')
-	},
-	{
-		icon: Trade,
-		title: i18n.global.t('service-title-3'),
-		text: i18n.global.t('service-text-3')
-	},
-	{
-		icon: Cyborg,
-		title: i18n.global.t('service-title-4'),
-		text: i18n.global.t('service-text-4')
-	},
-	{
-		icon: Cyborg,
-		title: i18n.global.t('service-title-5'),
-		text: i18n.global.t('service-text-5')
-	},
-	{
-		icon: Cyborg,
-		title: i18n.global.t('service-title-6'),
-		text: i18n.global.t('service-text-6')
-	}
-]);
-</script>

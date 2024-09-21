@@ -12,6 +12,93 @@
 	</section>
 </template>
 
+<script setup>
+import { i18n } from '@/locales';
+import { computed, nextTick, onMounted, watch } from 'vue';
+import person1Img from '@/images/person-1.webp';
+import person2Img from '@/images/person-2.webp';
+import person3Img from '@/images/person-3.webp';
+import person4Img from '@/images/person-4.webp';
+import Socials from '../Socials.vue';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
+
+const animations = [];
+const animateCards = () => {
+	if (animations.length) {
+		animations.forEach(anim => {
+			if (anim.scrollTrigger) {
+				anim.scrollTrigger.kill(); // Kill the ScrollTrigger
+			}
+			anim.kill(); // Kill the GSAP animation
+		});
+		animations.length = 0;
+	}
+	document.querySelectorAll('.team__item').forEach(el => {
+		const anim = gsap.from(el.children, {
+			opacity: 0,
+			filter: 'blur(10px)',
+			y: 20,
+			stagger: 0.2,
+			scrollTrigger: {
+				trigger: el,
+				start: 'top-=300 center',
+				end: 'bottom+=50 center',
+				scrub: 1
+			}
+		});
+		animations.push(anim);
+	});
+};
+
+const animateElements = () => {
+	gsap.from('.team__title', {
+		opacity: 0,
+		filter: 'blur(10px)',
+		y: -30,
+		scrollTrigger: {
+			trigger: '.team__title',
+			start: 'top center',
+			end: 'bottom+=50 center',
+			scrub: 1
+		}
+	});
+	animateCards();
+};
+onMounted(animateElements);
+watch(
+	() => i18n.global.locale,
+	async () => {
+		await nextTick();
+		animateCards();
+	}
+);
+
+const employees = computed(() => [
+	{
+		name: i18n.global.t('team-name-1'),
+		job: i18n.global.t('team-job-1'),
+		img: person1Img
+	},
+	{
+		name: i18n.global.t('team-name-2'),
+		job: i18n.global.t('team-job-2'),
+		img: person2Img
+	},
+	{
+		name: i18n.global.t('team-name-3'),
+		job: i18n.global.t('team-job-3'),
+		img: person3Img
+	},
+	{
+		name: i18n.global.t('team-name-4'),
+		job: i18n.global.t('team-job-4'),
+		img: person4Img
+	}
+]);
+</script>
+
 <style lang="scss" scoped>
 .fill-black {
 	color: var(--black);
@@ -53,37 +140,3 @@
 	}
 }
 </style>
-
-<script setup>
-import { i18n } from '@/locales';
-import { computed } from 'vue';
-
-import person1Img from '@/images/person-1.webp';
-import person2Img from '@/images/person-2.webp';
-import person3Img from '@/images/person-3.webp';
-import person4Img from '@/images/person-4.webp';
-import Socials from '../Socials.vue';
-
-const employees = computed(() => [
-	{
-		name: i18n.global.t('team-name-1'),
-		job: i18n.global.t('team-job-1'),
-		img: person1Img
-	},
-	{
-		name: i18n.global.t('team-name-2'),
-		job: i18n.global.t('team-job-2'),
-		img: person2Img
-	},
-	{
-		name: i18n.global.t('team-name-3'),
-		job: i18n.global.t('team-job-3'),
-		img: person3Img
-	},
-	{
-		name: i18n.global.t('team-name-4'),
-		job: i18n.global.t('team-job-4'),
-		img: person4Img
-	}
-]);
-</script>

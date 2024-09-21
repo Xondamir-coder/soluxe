@@ -29,11 +29,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Logo from './Icons/Logo.vue';
 import LinkList from './LinkList.vue';
 import Socials from './Socials.vue';
 import env from '@/env';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 const isLoading = ref(false);
 const isSent = ref(false);
@@ -68,6 +71,39 @@ Time: ${Intl.DateTimeFormat('en-GB', {
 	isLoading.value = false;
 	email.value = '';
 };
+
+onMounted(() => {
+	gsap.from('.footer__head', {
+		y: -50,
+		opacity: 0,
+		scrollTrigger: {
+			trigger: '.footer__head',
+			scrub: 1,
+			start: 'center 70%',
+			end: 'bottom center'
+		}
+	});
+	gsap.from('.footer__main', {
+		x: -50,
+		opacity: 0,
+		scrollTrigger: {
+			trigger: '.footer__main',
+			scrub: 1,
+			start: 'top bottom',
+			end: 'bottom bottom'
+		}
+	});
+	gsap.from('.footer__bottom', {
+		y: 50,
+		opacity: 0,
+		scrollTrigger: {
+			trigger: '.footer',
+			scrub: 1,
+			start: 'top center',
+			end: 'bottom bottom'
+		}
+	});
+});
 </script>
 
 <style lang="scss" scoped>
@@ -83,6 +119,8 @@ Time: ${Intl.DateTimeFormat('en-GB', {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+	overflow: hidden;
+
 	&__socials {
 		@media only screen and (max-width: 500px) {
 			width: 41px;

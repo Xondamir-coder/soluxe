@@ -1,9 +1,11 @@
 <template>
-	<section class="about" id="about">
+	<section class="about" id="about" ref="aboutRef">
 		<div class="about__header">
-			<div class="about__header-content">
+			<div class="about__header-content" ref="headerContentRef">
 				<h6 class="h6 about__header-label">{{ $t('link-about') }}</h6>
-				<h1 class="h1">{{ $t('about-header-title') }}</h1>
+				<h1 class="h1 about__title" ref="titleRef">
+					<div class="about__word" v-for="(word, i) in words" :key="i">{{ word }}</div>
+				</h1>
 			</div>
 			<p class="body-1">
 				{{ $t('about-header-text') }}
@@ -17,7 +19,7 @@
 				alt="bg banner"
 				width="1280"
 				height="444" />
-			<ul class="about__stats">
+			<ul class="about__stats" ref="statsListRef">
 				<li class="about__stats-item" v-for="{ amount, title } in stats" :key="title">
 					<h1 class="h1-big">{{ amount }}</h1>
 					<p class="body-1">{{ title }}</p>
@@ -25,7 +27,7 @@
 			</ul>
 		</div>
 		<div class="about__content">
-			<ul class="about__list">
+			<ul class="about__list" ref="listRef">
 				<li class="about__item" v-for="{ label, title, text } in items" :key="title">
 					<h6 class="cap-1 about__item-label">{{ label }}</h6>
 					<h3 class="h3">{{ title }}</h3>
@@ -35,6 +37,96 @@
 		</div>
 	</section>
 </template>
+
+<script setup>
+import { i18n } from '@/locales';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { computed, nextTick, onMounted, ref, watch } from 'vue';
+gsap.registerPlugin(ScrollTrigger);
+
+let timeline;
+
+const animateElements = () => {
+	if (timeline) {
+		timeline.scrollTrigger.kill(); // Kill the ScrollTrigger
+		timeline.kill(); // Kill the previous timeline
+	}
+
+	// Define the new timeline and animations
+	timeline = gsap.timeline({
+		scrollTrigger: {
+			trigger: '.about',
+			scrub: 1,
+			end: 'bottom-=200 center',
+			start: 'top center'
+		}
+	});
+
+	// Define the animation sequence
+	timeline
+		.from('.about__header-content', {
+			duration: 0.6,
+			scaleY: 0
+		})
+		.from('.about__word', {
+			y: 30,
+			opacity: 0,
+			stagger: 0.04
+		})
+		.from('.about__stats-item', {
+			transformOrigin: 'top left',
+			scale: 0,
+			opacity: 0,
+			stagger: 0.2
+		})
+		.from('.about__item', {
+			scale: 1.3,
+			opacity: 0,
+			stagger: 0.2
+		});
+};
+
+watch(
+	() => i18n.global.locale,
+	async () => {
+		await nextTick();
+		animateElements();
+	}
+);
+onMounted(animateElements);
+
+const words = computed(() => {
+	const title = i18n.global.t('about-header-title');
+	return title.split(/(\s+)/).map(word => (word === ' ' ? '\u00A0' : word)); // Replace spaces with non-breaking spaces
+});
+const stats = computed(() => [
+	{
+		amount: '12+',
+		title: i18n.global.t('about-exp')
+	},
+	{
+		amount: `18${i18n.global.t('k')}+`,
+		title: i18n.global.t('about-attendees')
+	},
+	{
+		amount: `30${i18n.global.t('k')}+`,
+		title: i18n.global.t('about-events')
+	}
+]);
+const items = computed(() => [
+	{
+		label: i18n.global.t('about-mission-label'),
+		title: i18n.global.t('about-mission-title'),
+		text: i18n.global.t('about-mission-text')
+	},
+	{
+		label: i18n.global.t('about-vision-label'),
+		title: i18n.global.t('about-vision-title'),
+		text: i18n.global.t('about-vision-text')
+	}
+]);
+</script>
 
 <style lang="scss" scoped>
 #about {
@@ -50,6 +142,10 @@
 		grid-column: 1/-1;
 	}
 
+	&__title {
+		display: flex;
+		flex-wrap: wrap;
+	}
 	&__item {
 		display: flex;
 		flex-direction: column;
@@ -68,6 +164,7 @@
 		background-color: var(--green);
 		padding: 6.4rem clamp(2.4rem, 5vw, 6.4rem);
 		padding-bottom: 3.2rem;
+		overflow: hidden;
 	}
 	&__stats {
 		display: grid;
@@ -80,6 +177,8 @@
 		align-self: end;
 		margin-left: 10%;
 		gap: 10px;
+		&-item {
+		}
 		@media screen and (max-width: 768px) {
 			margin-left: 0;
 			max-width: 100%;
@@ -127,6 +226,7 @@
 			font-weight: 400;
 		}
 		&-content {
+			transform-origin: top;
 			background-color: rgba(212, 187, 138, 0.7);
 			backdrop-filter: blur(6px);
 			color: #fff;
@@ -138,35 +238,3 @@
 	}
 }
 </style>
-
-<script setup>
-import { i18n } from '@/locales';
-import { computed } from 'vue';
-
-const stats = computed(() => [
-	{
-		amount: '12+',
-		title: i18n.global.t('about-exp')
-	},
-	{
-		amount: `18${i18n.global.t('k')}+`,
-		title: i18n.global.t('about-attendees')
-	},
-	{
-		amount: `30${i18n.global.t('k')}+`,
-		title: i18n.global.t('about-events')
-	}
-]);
-const items = computed(() => [
-	{
-		label: i18n.global.t('about-mission-label'),
-		title: i18n.global.t('about-mission-title'),
-		text: i18n.global.t('about-mission-text')
-	},
-	{
-		label: i18n.global.t('about-vision-label'),
-		title: i18n.global.t('about-vision-title'),
-		text: i18n.global.t('about-vision-text')
-	}
-]);
-</script>

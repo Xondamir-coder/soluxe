@@ -6,13 +6,15 @@
 		</video>
 		<div class="hero__content">
 			<h1 class="h1-big hero__title">
-				{{ $t('hero-title') }}
+				<span class="hero__letter" v-for="(letter, i) in letters" :key="i">
+					{{ letter }}
+				</span>
 			</h1>
-			<p class="body-1">
+			<p class="body-1 hero__subtitle">
 				{{ $t('hero-subtitle') }}
 			</p>
 			<div class="hero__buttons">
-				<button class="button">
+				<button class="button hero__button">
 					{{ $t('projects') }}
 				</button>
 				<button class="button hero__button hero__button-call">
@@ -23,6 +25,31 @@
 	</section>
 </template>
 
+<script setup>
+import { i18n } from '@/locales';
+import gsap from 'gsap';
+import { computed, onMounted } from 'vue';
+
+const letters = computed(() => i18n.global.t('hero-title').split(''));
+onMounted(() => {
+	const tl = gsap.timeline();
+	tl.from('.hero__letter', {
+		opacity: 0,
+		duration: 0.3,
+		filter: 'blur(10px)',
+		stagger: 0.04
+	})
+		.from('.hero__subtitle', {
+			opacity: 0,
+			y: -20
+		})
+		.from('.hero__button', {
+			scale: 0,
+			stagger: 0.2
+		});
+});
+</script>
+
 <style lang="scss" scoped>
 .hero {
 	min-height: 100vh;
@@ -30,6 +57,7 @@
 	justify-content: center;
 	align-items: center;
 	position: relative;
+
 	&__video {
 		position: absolute;
 		top: 0;

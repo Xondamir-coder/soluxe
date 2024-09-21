@@ -63,6 +63,90 @@
 	</section>
 </template>
 
+<script setup>
+import env from '@/env';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { onMounted, ref } from 'vue';
+gsap.registerPlugin(ScrollTrigger);
+
+const name = ref('');
+const email = ref('');
+const isLoading = ref(false);
+const isSent = ref(false);
+
+const submitMessage = async () => {
+	name.value = name.value.trim();
+	email.value = email.value.trim();
+
+	if (!name.value || !email.value) return;
+
+	isLoading.value = true;
+
+	const text = `
+Type: Message	
+Name: ${name.value}
+Email: ${email.value}
+Time: ${Intl.DateTimeFormat('en-GB', {
+		dateStyle: 'short',
+		timeStyle: 'short'
+	}).format(new Date())}
+	`;
+
+	const res = await fetch(`https://api.telegram.org/bot${env.botToken}/sendMessage`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ chat_id: env.chat_id, text })
+	});
+	await res.json();
+
+	isSent.value = true;
+	isLoading.value = false;
+
+	name.value = '';
+	email.value = '';
+
+	setTimeout(() => {
+		isSent.value = false;
+	}, 2000);
+};
+
+onMounted(() => {
+	gsap.from(document.querySelector('.contact__header').children, {
+		y: 50,
+		opacity: 0,
+		stagger: 0.2,
+		scrollTrigger: {
+			trigger: '.contact__header',
+			start: 'top bottom',
+			end: 'bottom center',
+			scrub: 1
+		}
+	});
+	const tl = gsap.timeline({
+		scrollTrigger: {
+			trigger: '.contact__main',
+			scrub: 1,
+			start: 'top 70%',
+			end: 'center 40%'
+		}
+	});
+	tl.from('.contact__map', {
+		x: '-25%',
+		opacity: 0
+	}).from(
+		'.contact__content',
+		{
+			x: '25%',
+			opacity: 0
+		},
+		'-=0.5'
+	);
+});
+</script>
+
 <style scoped lang="scss">
 .contact {
 	--margin: calc(156 / 2 * 0.1rem);
@@ -70,6 +154,7 @@
 	flex-direction: column;
 	gap: var(--margin);
 	margin: var(--margin) 0;
+	overflow: hidden;
 
 	&__map {
 		min-height: 300px;
@@ -162,51 +247,3 @@
 	}
 }
 </style>
-
-<script setup>
-import env from '@/env';
-import { ref } from 'vue';
-
-const name = ref('');
-const email = ref('');
-const isLoading = ref(false);
-const isSent = ref(false);
-
-const submitMessage = async () => {
-	name.value = name.value.trim();
-	email.value = email.value.trim();
-
-	if (!name.value || !email.value) return;
-
-	isLoading.value = true;
-
-	const text = `
-Type: Message	
-Name: ${name.value}
-Email: ${email.value}
-Time: ${Intl.DateTimeFormat('en-GB', {
-		dateStyle: 'short',
-		timeStyle: 'short'
-	}).format(new Date())}
-	`;
-
-	const res = await fetch(`https://api.telegram.org/bot${env.botToken}/sendMessage`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ chat_id: env.chat_id, text })
-	});
-	await res.json();
-
-	isSent.value = true;
-	isLoading.value = false;
-
-	name.value = '';
-	email.value = '';
-
-	setTimeout(() => {
-		isSent.value = false;
-	}, 2000);
-};
-</script>

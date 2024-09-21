@@ -16,6 +16,28 @@
 	</section>
 </template>
 
+<script setup>
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { onMounted } from 'vue';
+gsap.registerPlugin(ScrollTrigger);
+
+onMounted(() => {
+	gsap.from(document.querySelector('.post__content').children, {
+		y: 100,
+		filter: 'blur(10px)',
+		opacity: 0,
+		stagger: 0.1,
+		scrollTrigger: {
+			trigger: '.post__content',
+			start: 'top 80%',
+			end: 'top top',
+			scrub: 1
+		}
+	});
+});
+</script>
+
 <style lang="scss" scoped>
 #post {
 	@media only screen and (max-width: 768px) {
