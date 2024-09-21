@@ -1,9 +1,13 @@
 <template>
-	<section class="team" id="team">
-		<h2 class="team__title h2">{{ $t('team-title') }}</h2>
+	<section class="team" id="team" ref="teamRef">
+		<h2 class="team__title h2" ref="titleRef">{{ $t('team-title') }}</h2>
 		<ul class="team__list">
-			<li class="team__item" v-for="{ name, job, img } in employees" :key="name">
-				<img loading="lazy" class="team__img" :src="img" :alt="name" />
+			<li
+				class="team__item"
+				v-for="{ name, job, img } in employees"
+				:key="name"
+				ref="teamItems">
+				<img class="team__img" :src="img" :alt="name" />
 				<h3 class="h3">{{ name }}</h3>
 				<p class="body-2">{{ job }}</p>
 				<Socials class="fill-black" />
@@ -14,7 +18,7 @@
 
 <script setup>
 import { i18n } from '@/locales';
-import { computed, nextTick, onMounted, watch } from 'vue';
+import { computed, nextTick, onMounted, watch, ref } from 'vue';
 import person1Img from '@/images/person-1.webp';
 import person2Img from '@/images/person-2.webp';
 import person3Img from '@/images/person-3.webp';
@@ -23,6 +27,10 @@ import Socials from '../Socials.vue';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
+
+const teamRef = ref();
+const titleRef = ref();
+const teamItems = ref([]);
 
 const animations = [];
 
@@ -36,14 +44,14 @@ const animateCards = () => {
 		});
 		animations.length = 0;
 	}
-	document.querySelectorAll('.team__item').forEach((el, index) => {
+
+	teamItems.value.forEach((el, index) => {
 		const anim = gsap.from(el.children, {
 			opacity: 0,
 			filter: 'blur(10px)',
 			y: 20,
 			stagger: 0.2,
 			scrollTrigger: {
-				id: `teamCard_${index}`, // Unique ID for each card
 				trigger: el,
 				start: 'top-=100 center',
 				end: 'bottom+=50 center',
@@ -53,15 +61,13 @@ const animateCards = () => {
 		animations.push(anim);
 	});
 };
-
 const animateElements = () => {
-	gsap.from('.team__title', {
+	gsap.from(titleRef.value, {
 		opacity: 0,
 		filter: 'blur(10px)',
 		y: -30,
 		scrollTrigger: {
-			id: 'teamTitle', // Unique ID for the title
-			trigger: '.team__title',
+			trigger: titleRef.value,
 			start: 'top center',
 			end: 'bottom+=50 center',
 			scrub: 1

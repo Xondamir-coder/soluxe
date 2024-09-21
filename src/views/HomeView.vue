@@ -26,7 +26,6 @@ import Post from '@/components/Home/Post.vue';
 import Services from '@/components/Home/Services.vue';
 import Team from '@/components/Home/Team.vue';
 import Work from '@/components/Home/Work.vue';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const lenis = new Lenis();
 function raf(time) {
@@ -35,21 +34,7 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-const observer = new IntersectionObserver(entries => {
-	entries.forEach(entry => {
-		if (entry.isIntersecting) {
-			if (!entry.target.dataset.refresh) {
-				ScrollTrigger.refresh();
-				entry.target.dataset.refresh = 'true';
-			}
-		}
-	});
-});
-
 onMounted(() => {
-	Array.from(document.getElementById('main').children).forEach(el => {
-		observer.observe(el);
-	});
 	document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 		anchor.addEventListener('click', function (e) {
 			e.preventDefault();

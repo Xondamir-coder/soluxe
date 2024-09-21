@@ -3,17 +3,16 @@
 		<div class="about__header">
 			<div class="about__header-content" ref="headerContentRef">
 				<h6 class="h6 about__header-label">{{ $t('link-about') }}</h6>
-				<h1 class="h1 about__title" ref="titleRef">
-					<div class="about__word" v-for="(word, i) in words" :key="i">{{ word }}</div>
+				<h1 class="h1 about__title">
+					<div class="about__word" v-for="(word, i) in words" :key="i" ref="wordsRef">
+						{{ word }}
+					</div>
 				</h1>
 			</div>
-			<p class="body-1">
-				{{ $t('about-header-text') }}
-			</p>
+			<p class="body-1">{{ $t('about-header-text') }}</p>
 		</div>
 		<div class="about__bg">
 			<img
-				loading="lazy"
 				class="about__bg-img"
 				src="@/images/about-bg.avif"
 				alt="bg banner"
@@ -45,6 +44,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { computed, nextTick, onMounted, ref, watch } from 'vue';
 gsap.registerPlugin(ScrollTrigger);
 
+const aboutRef = ref(null);
+const headerContentRef = ref(null);
+const statsListRef = ref(null);
+const listRef = ref(null);
+const wordsRef = ref(null);
+
 let timeline;
 
 const animateElements = () => {
@@ -56,31 +61,31 @@ const animateElements = () => {
 	// Define the new timeline and animations
 	timeline = gsap.timeline({
 		scrollTrigger: {
-			trigger: '.about',
+			trigger: aboutRef.value,
 			scrub: 1,
 			end: 'bottom-=200 center',
 			start: 'top center'
 		}
 	});
 
-	// Define the animation sequence
+	// Define the animation sequence using refs
 	timeline
-		.from('.about__header-content', {
+		.from(headerContentRef.value, {
 			duration: 0.6,
 			scaleY: 0
 		})
-		.from('.about__word', {
+		.from(wordsRef.value, {
 			y: 30,
 			opacity: 0,
 			stagger: 0.04
 		})
-		.from('.about__stats-item', {
+		.from(statsListRef.value.children, {
 			transformOrigin: 'top left',
 			scale: 0,
 			opacity: 0,
 			stagger: 0.2
 		})
-		.from('.about__item', {
+		.from(listRef.value.children, {
 			scale: 1.3,
 			opacity: 0,
 			stagger: 0.2
@@ -100,6 +105,7 @@ const words = computed(() => {
 	const title = i18n.global.t('about-header-title');
 	return title.split(/(\s+)/).map(word => (word === ' ' ? '\u00A0' : word)); // Replace spaces with non-breaking spaces
 });
+
 const stats = computed(() => [
 	{
 		amount: '12+',
@@ -114,6 +120,7 @@ const stats = computed(() => [
 		title: i18n.global.t('about-events')
 	}
 ]);
+
 const items = computed(() => [
 	{
 		label: i18n.global.t('about-mission-label'),
@@ -177,8 +184,6 @@ const items = computed(() => [
 		align-self: end;
 		margin-left: 10%;
 		gap: 10px;
-		&-item {
-		}
 		@media screen and (max-width: 768px) {
 			margin-left: 0;
 			max-width: 100%;

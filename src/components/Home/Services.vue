@@ -1,8 +1,12 @@
 <template>
-	<section class="services" id="services">
+	<section class="services" id="services" ref="servicesRef">
 		<h2 class="services__title h2">{{ $t('services-title') }}</h2>
 		<ul class="services__list">
-			<li class="services__item" v-for="service in services" :key="service.title">
+			<li
+				class="services__item"
+				v-for="(service, index) in services"
+				:key="service.title"
+				ref="serviceItems">
 				<div class="services__icon-container">
 					<component :is="service.icon" class="services__icon" />
 				</div>
@@ -14,7 +18,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, onMounted, watch } from 'vue';
+import { computed, nextTick, onMounted, watch, ref } from 'vue';
 import Corporate from '../Icons/Corporate.vue';
 import Cyborg from '../Icons/Cyborg.vue';
 import Shuttle from '../Icons/Shuttle.vue';
@@ -23,6 +27,9 @@ import { i18n } from '@/locales';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
+
+const servicesRef = ref(null);
+const serviceItems = ref([]);
 
 const anims = [];
 const animateCards = () => {
@@ -35,7 +42,7 @@ const animateCards = () => {
 		});
 		anims.length = 0;
 	}
-	document.querySelectorAll('.services__item').forEach(el => {
+	serviceItems.value.forEach(el => {
 		const anim = gsap.from(el.children, {
 			x: 20,
 			y: -20,
@@ -51,6 +58,7 @@ const animateCards = () => {
 		anims.push(anim);
 	});
 };
+
 const animateElements = () => {
 	gsap.from('.services__title', {
 		opacity: 0,
@@ -63,10 +71,13 @@ const animateElements = () => {
 			scrub: 1
 		}
 	});
-	animateCards();
 };
 
-onMounted(animateElements);
+onMounted(() => {
+	animateElements();
+	animateCards();
+});
+
 watch(
 	() => i18n.global.locale,
 	async () => {
