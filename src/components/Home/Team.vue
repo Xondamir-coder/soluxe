@@ -25,6 +25,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const animations = [];
+
 const animateCards = () => {
 	if (animations.length) {
 		animations.forEach(anim => {
@@ -35,15 +36,16 @@ const animateCards = () => {
 		});
 		animations.length = 0;
 	}
-	document.querySelectorAll('.team__item').forEach(el => {
+	document.querySelectorAll('.team__item').forEach((el, index) => {
 		const anim = gsap.from(el.children, {
 			opacity: 0,
 			filter: 'blur(10px)',
 			y: 20,
 			stagger: 0.2,
 			scrollTrigger: {
+				id: `teamCard_${index}`, // Unique ID for each card
 				trigger: el,
-				start: 'top-=300 center',
+				start: 'top-=100 center',
 				end: 'bottom+=50 center',
 				scrub: 1
 			}
@@ -58,15 +60,20 @@ const animateElements = () => {
 		filter: 'blur(10px)',
 		y: -30,
 		scrollTrigger: {
+			id: 'teamTitle', // Unique ID for the title
 			trigger: '.team__title',
 			start: 'top center',
 			end: 'bottom+=50 center',
 			scrub: 1
 		}
 	});
-	animateCards();
 };
-onMounted(animateElements);
+
+onMounted(() => {
+	animateElements();
+	animateCards();
+});
+
 watch(
 	() => i18n.global.locale,
 	async () => {
