@@ -21,6 +21,12 @@
 	</header>
 	<div class="menu">
 		<LinkList class="menu__links" @click="toggleMenu" />
+		<button class="lang" @click="toggleLang" :aria-label="$t('change-lang')">
+			<p>
+				{{ $i18n.locale }} /
+				{{ $i18n.availableLocales.find(locale => locale !== $i18n.locale).toUpperCase() }}
+			</p>
+		</button>
 		<button class="button">{{ $t('call-us') }}</button>
 	</div>
 </template>
@@ -83,6 +89,11 @@ const toggleLang = () => {
 		transition: background-color 0.4s, backdrop-filter 0.4s;
 		display: flex;
 		justify-content: space-between;
+	}
+	.lang {
+		@media only screen and (max-width: 1000px) {
+			display: none;
+		}
 	}
 	&.menu-open {
 		background-color: transparent;
@@ -147,11 +158,16 @@ const toggleLang = () => {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 40px;
+	gap: 30px;
 	justify-content: center;
 	padding-top: 60px !important;
 	transform: translateX(100%);
 	transition: transform 0.6s;
+	.lang {
+		font-size: max(18px, 1vh + 1.5rem);
+		color: #fff;
+		margin-right: 0;
+	}
 	&__links > * {
 		font-size: clamp(40px + 1vh, 2.5vw + 1rem, 70px);
 		font-weight: 700;
@@ -177,9 +193,7 @@ const toggleLang = () => {
 	font-size: 0.8rem;
 	margin-right: 3.75rem;
 	transition: color 0.4s;
-	@media only screen and (max-width: 1000px) {
-		display: none;
-	}
+
 	p::first-letter {
 		text-transform: uppercase;
 	}

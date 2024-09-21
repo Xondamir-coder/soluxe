@@ -7,6 +7,9 @@
 	"link-contact": "Contact us",
 	"link-policy": "Privacy Policy",
 
+	"error-subtitle": "Oops, We can't seem to find the page you are looking for.",
+	"error-text": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+	"back": "Back to Home Page",
 	"reload-page": "Reload page",
 	"open-menu": "Open menu",
 	"change-lang": "Change language",
