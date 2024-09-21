@@ -1,7 +1,7 @@
 <template>
 	<section id="home" class="hero">
 		<video class="hero__video" loop muted autoplay>
-			<source src="@/videos/hero-video.mp4" type="video/mp4" />
+			<source src="@/videos/hero-video-2.mp4" type="video/mp4" />
 			Your browser does not support the video tag.
 		</video>
 		<div class="hero__content">
