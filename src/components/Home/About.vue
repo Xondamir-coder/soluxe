@@ -64,7 +64,7 @@ const animateElements = () => {
 			trigger: aboutRef.value,
 			scrub: 1,
 			end: 'bottom-=200 center',
-			start: 'top center'
+			start: 'top 75%'
 		}
 	});
 

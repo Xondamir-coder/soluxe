@@ -9,49 +9,30 @@
 			:class="{ active: isMenuOpen }"
 			:aria-label="$t('open-menu')"></button>
 		<LinkList class="links" />
-		<button class="lang" @click="toggleLang" :aria-label="$t('change-lang')">
-			<p>
-				{{ $i18n.locale }} /
-				{{ $i18n.availableLocales.find(locale => locale !== $i18n.locale).toUpperCase() }}
-			</p>
-		</button>
-		<button class="button header__button">
-			{{ $t('call-us') }}
-		</button>
+		<LangButton />
 	</header>
 	<div class="menu">
 		<LinkList class="menu__links" @click="toggleMenu" />
-		<button class="lang" @click="toggleLang" :aria-label="$t('change-lang')">
-			<p>
-				{{ $i18n.locale }} /
-				{{ $i18n.availableLocales.find(locale => locale !== $i18n.locale).toUpperCase() }}
-			</p>
-		</button>
+		<LangButton />
 		<button class="button">{{ $t('call-us') }}</button>
 	</div>
 </template>
 
 <script setup>
-import { changeLang, i18n } from '@/locales';
 import Logo from './Icons/Logo.vue';
+import LangButton from './LangButton.vue';
 import LinkList from './LinkList.vue';
 import { ref } from 'vue';
 
 const isMenuOpen = ref(false);
 
-const toggleMenu = () => {
-	console.log('hello');
-	isMenuOpen.value = !isMenuOpen.value;
-};
+const toggleMenu = () => (isMenuOpen.value = !isMenuOpen.value);
 const reloadPage = () => {
 	window.scrollTo({
 		top: 0,
 		behavior: 'instant'
 	});
 	window.location.reload();
-};
-const toggleLang = () => {
-	changeLang(i18n.global.locale == 'en' ? 'ru' : 'en');
 };
 </script>
 
@@ -78,7 +59,7 @@ const toggleLang = () => {
 	// background-color: rgba(255, 255, 255, 0.05);
 	color: #fff;
 	display: grid;
-	grid-template-columns: max-content 1fr max-content 12.5rem;
+	grid-template-columns: max-content 1fr max-content;
 	align-items: center;
 	overflow: hidden;
 	padding: 12px 3rem;
@@ -141,11 +122,6 @@ const toggleLang = () => {
 			transform-origin: left;
 		}
 	}
-	&__button {
-		@media only screen and (max-width: 1000px) {
-			display: none;
-		}
-	}
 }
 .menu {
 	position: fixed;
@@ -183,22 +159,8 @@ const toggleLang = () => {
 }
 .links {
 	margin: 0 auto;
-	transform: translateX(5rem);
 	@media only screen and (max-width: 1000px) {
 		display: none;
-	}
-}
-
-.lang {
-	font-size: 0.8rem;
-	margin-right: 3.75rem;
-	transition: color 0.4s;
-
-	p::first-letter {
-		text-transform: uppercase;
-	}
-	&:hover {
-		color: var(--yellow);
 	}
 }
 </style>

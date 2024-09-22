@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n';
 import en from './en.json';
 import ru from './ru.json';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import zh from './zh.json';
 
 const locale = localStorage.getItem('lang') || navigator.language.split('-')[0];
 
@@ -10,7 +10,8 @@ export const i18n = createI18n({
 	fallbackLocale: 'en',
 	messages: {
 		en,
-		ru
+		ru,
+		zh
 	}
 });
 

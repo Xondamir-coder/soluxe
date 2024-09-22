@@ -13,14 +13,6 @@
 			<p class="body-1 hero__subtitle">
 				{{ $t('hero-subtitle') }}
 			</p>
-			<div class="hero__buttons">
-				<button class="button hero__button">
-					{{ $t('projects') }}
-				</button>
-				<button class="button hero__button hero__button-call">
-					{{ $t('call-us') }}
-				</button>
-			</div>
 		</div>
 	</section>
 </template>
@@ -38,15 +30,10 @@ onMounted(() => {
 		duration: 0.3,
 		filter: 'blur(10px)',
 		stagger: 0.04
-	})
-		.from('.hero__subtitle', {
-			opacity: 0,
-			y: -20
-		})
-		.from('.hero__button', {
-			scale: 0,
-			stagger: 0.2
-		});
+	}).from('.hero__subtitle', {
+		opacity: 0,
+		y: -20
+	});
 });
 </script>
 
