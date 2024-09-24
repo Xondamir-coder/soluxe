@@ -53,8 +53,8 @@ const animateCards = () => {
 			stagger: 0.2,
 			scrollTrigger: {
 				trigger: el,
-				start: 'top-=100 center',
-				end: 'bottom+=50 center',
+				start: 'top bottom',
+				end: 'bottom 70%',
 				scrub: 1
 			}
 		});

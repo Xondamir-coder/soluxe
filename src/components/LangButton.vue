@@ -1,29 +1,21 @@
 <template>
-	<button class="lang" :aria-label="$t('change-lang')">
-		<p v-for="{ name, locale } in langs" :key="locale" @click="toggleLang(locale)">
-			{{ name }}
-			<span v-if="locale != 'zh'">/</span>
-		</p>
-	</button>
+	<div class="lang">
+		<button class="lang__button" :aria-label="$t('change-lang')" @click="toggleLang('en')">
+			En
+		</button>
+		|
+		<button class="lang__button" :aria-label="$t('change-lang')" @click="toggleLang('ru')">
+			Ru
+		</button>
+		|
+		<button class="lang__button" :aria-label="$t('change-lang')" @click="toggleLang('zh')">
+			中文
+		</button>
+	</div>
 </template>
 
 <script setup>
 import { changeLang } from '@/locales';
-
-const langs = [
-	{
-		name: 'En',
-		locale: 'en'
-	},
-	{
-		name: 'Ru',
-		locale: 'ru'
-	},
-	{
-		name: '中文',
-		locale: 'zh'
-	}
-];
 const toggleLang = newLocale => changeLang(newLocale);
 </script>
 
@@ -32,13 +24,13 @@ const toggleLang = newLocale => changeLang(newLocale);
 	font-size: 0.8rem;
 	display: flex;
 	gap: 6px;
-	p {
+	&__button {
 		transition: color 0.4s;
 		display: flex;
 		gap: 6px;
-	}
-	p:hover {
-		color: var(--yellow);
+		&:hover {
+			color: var(--yellow);
+		}
 	}
 }
 </style>

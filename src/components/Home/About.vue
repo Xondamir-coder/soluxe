@@ -45,16 +45,14 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue';
 gsap.registerPlugin(ScrollTrigger);
 
 const aboutRef = ref(null);
-const headerContentRef = ref(null);
 const statsListRef = ref(null);
 const listRef = ref(null);
-const wordsRef = ref(null);
 
 let timeline;
 
 const animateElements = () => {
 	if (timeline) {
-		timeline.scrollTrigger.kill(); // Kill the ScrollTrigger
+		// timeline.scrollTrigger.kill(); // Kill the ScrollTrigger
 		timeline.kill(); // Kill the previous timeline
 	}
 
@@ -63,18 +61,18 @@ const animateElements = () => {
 		scrollTrigger: {
 			trigger: aboutRef.value,
 			scrub: 1,
-			end: 'bottom-=200 center',
-			start: 'top 75%'
+			start: 'top bottom',
+			end: 'bottom bottom'
 		}
 	});
 
 	// Define the animation sequence using refs
 	timeline
-		.from(headerContentRef.value, {
+		.from('.about__header-content', {
 			duration: 0.6,
 			scaleY: 0
 		})
-		.from(wordsRef.value, {
+		.from('.about__word', {
 			y: 30,
 			opacity: 0,
 			stagger: 0.04

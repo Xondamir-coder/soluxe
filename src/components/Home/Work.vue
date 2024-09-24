@@ -59,9 +59,9 @@ const animateCards = () => {
 		const anim = gsap
 			.timeline({
 				scrollTrigger: {
-					trigger: el,
-					start: 'top-=300 center',
-					end: 'bottom+=50 center',
+					trigger: el.parentElement,
+					start: 'top center',
+					end: 'bottom 75%',
 					scrub: 1
 				}
 			})
