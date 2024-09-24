@@ -19,10 +19,12 @@
 </template>
 
 <script setup>
+import { isPreloaderActive } from '@/state';
 import Logo from './Icons/Logo.vue';
 import LangButton from './LangButton.vue';
 import LinkList from './LinkList.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import gsap from 'gsap';
 
 const isMenuOpen = ref(false);
 
@@ -34,19 +36,20 @@ const reloadPage = () => {
 	});
 	window.location.reload();
 };
+
+watch(
+	() => isPreloaderActive.value,
+	() => {
+		gsap.from('.header', {
+			scale: 0.7,
+			opacity: 0,
+			duration: 1
+		});
+	}
+);
 </script>
 
 <style lang="scss" scoped>
-@keyframes scale-up {
-	from {
-		transform: scale(0.7) perspective(800px);
-		opacity: 0;
-	}
-	to {
-		transform: scale(1) perspective(800px);
-		opacity: 1;
-	}
-}
 .header {
 	width: 100%;
 	position: fixed;
@@ -56,16 +59,12 @@ const reloadPage = () => {
 	backdrop-filter: blur(10px);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 	background-color: rgba(0, 0, 0, 0.3);
-	// background-color: rgba(255, 255, 255, 0.05);
 	color: #fff;
 	display: grid;
 	grid-template-columns: max-content 1fr max-content;
 	align-items: center;
 	overflow: hidden;
 	padding: 12px 3rem;
-	animation: scale-up 1s;
-	transform-origin: top;
-	transform-style: preserve-3d;
 	@media only screen and (max-width: 1000px) {
 		transition: background-color 0.4s, backdrop-filter 0.4s;
 		display: flex;

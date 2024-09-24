@@ -19,22 +19,29 @@
 
 <script setup>
 import { i18n } from '@/locales';
+import { isPreloaderActive } from '@/state';
 import gsap from 'gsap';
-import { computed, onMounted } from 'vue';
+import { computed, watch } from 'vue';
 
 const letters = computed(() => i18n.global.t('hero-title').split(''));
-onMounted(() => {
-	const tl = gsap.timeline();
-	tl.from('.hero__letter', {
-		opacity: 0,
-		duration: 0.3,
-		filter: 'blur(10px)',
-		stagger: 0.04
-	}).from('.hero__subtitle', {
-		opacity: 0,
-		y: -20
-	});
-});
+
+watch(
+	() => isPreloaderActive.value,
+	() => {
+		const tl = gsap.timeline({
+			defaults: {
+				opacity: 0
+			}
+		});
+		tl.from('.hero__letter', {
+			duration: 0.3,
+			filter: 'blur(10px)',
+			stagger: 0.04
+		}).from('.hero__subtitle', {
+			y: -20
+		});
+	}
+);
 </script>
 
 <style lang="scss" scoped>

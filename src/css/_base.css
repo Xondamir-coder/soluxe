@@ -42,6 +42,9 @@ html {
 body {
 	font-family: var(--font-sen);
 }
+body:has(.preloader) {
+	overflow: hidden;
+}
 body:has(.header.menu-open) {
 	overflow: hidden;
 }
