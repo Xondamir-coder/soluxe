@@ -6,8 +6,9 @@
 		</div>
 		<div class="footer__bottom">
 			<div class="footer__info">
-				<p class="body-1">{{ $t('address') }}</p>
-				<a href="mailto:Soluxeevents@gmail.com " class="body-1">Soluxeevents@gmail.com </a>
+				<p class="body-1">{{ $t('contact-address') }}</p>
+				<a href="mailto:events@soluxe.uz" class="body-1">events@soluxe.uz</a>
+				<a href="tel:+998 93 384 02 72" class="body-1">+998 (93) 384-02-72</a>
 			</div>
 			<Socials class="footer__socials fill-grey" />
 		</div>
@@ -59,6 +60,13 @@ onMounted(() => {
 	flex-direction: column;
 	gap: 2rem;
 	overflow: hidden;
+
+	a {
+		transition: color 0.3s;
+		&:hover {
+			color: var(--yellow);
+		}
+	}
 
 	&__socials {
 		@media only screen and (max-width: 500px) {

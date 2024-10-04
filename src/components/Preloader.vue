@@ -1,6 +1,7 @@
 <template>
 	<div class="preloader">
 		<Logo class="preloader__logo" />
+		<div class="preloader__banner"></div>
 	</div>
 </template>
 
@@ -14,44 +15,61 @@ import { isPreloaderActive } from '@/state';
 lenis.stop();
 
 onMounted(() => {
+	lenis.stop();
+	const pathLength = document
+		.querySelector('.preloader__logo')
+		.querySelector('.icon')
+		.getTotalLength();
+
 	gsap.timeline()
-		.fromTo(
-			'.preloader__logo',
+		.to('.preloader__logo .icon', {
+			fill: '#d4bb8a',
+			duration: 2.5
+		})
+		.from('.preloader__logo', {
+			y: 50,
+			scale: 2
+		})
+		.from(
+			'.preloader__logo .text',
 			{
-				delay: 0.2,
+				transformOrigin: 'center',
 				opacity: 0,
 				scale: 0
 			},
-			{
-				delay: 0.2,
-				opacity: 1,
-				scale: 1.1
-			}
+			'-=0.5'
 		)
-		.to('.preloader__logo', {
-			scale: 0.9,
-			duration: 1, // Total time for one cycle (up and down)
-			ease: 'power1.inOut', // Similar easing to the CSS timing
-			repeat: 3, // Infinite repetition
-			yoyo: true,
-			onComplete: () => {
-				isPreloaderActive.value = false;
-			}
+		.from('.preloader__banner', {
+			x: '100%',
+			duration: 1
 		})
 		.to('.preloader', {
 			opacity: 0,
-			duration: 0.5,
-			onComplete: () => {
+			delay: 0.5,
+			display: 'none',
+			onStart: () => {
+				isPreloaderActive.value = false;
 				lenis.start();
-				document.querySelector('.preloader').remove();
 			}
 		});
+
+	gsap.fromTo(
+		'.preloader__logo .icon',
+		{
+			strokeDashoffset: pathLength,
+			strokeDasharray: pathLength
+		},
+		{
+			strokeDashoffset: 0,
+			duration: 2.5
+		}
+	);
 });
 </script>
 
 <style lang="scss" scoped>
 .preloader {
-	background-color: #362e23;
+	background-color: var(--green);
 	position: absolute;
 	inset: 0;
 	width: 100%;
@@ -62,6 +80,11 @@ onMounted(() => {
 	&__logo {
 		width: max(10rem, 150px);
 		height: max(10rem, 150px);
+	}
+	&__banner {
+		position: absolute;
+		inset: 0;
+		background-color: #000;
 	}
 }
 </style>
