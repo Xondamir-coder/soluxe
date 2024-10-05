@@ -24,7 +24,8 @@ onMounted(() => {
 	gsap.timeline()
 		.to('.preloader__logo .icon', {
 			fill: '#d4bb8a',
-			duration: 2.5
+			delay: 1,
+			duration: 1
 		})
 		.from('.preloader__logo', {
 			y: 50,
@@ -61,7 +62,7 @@ onMounted(() => {
 		},
 		{
 			strokeDashoffset: 0,
-			duration: 2.5
+			duration: 6
 		}
 	);
 });
